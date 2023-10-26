@@ -18,6 +18,7 @@ if config.config_file_name is not None:
 from app import config as config_env
 from app.db import Base
 from app.user.models import User
+from app.products.models import Categories,Product
 
 # for 'autogenerate' support
 # from myapp import mymodel
