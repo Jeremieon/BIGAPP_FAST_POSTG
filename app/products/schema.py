@@ -1,4 +1,5 @@
-from pydantic import BaseModel, constr
+from pydantic import BaseModel,constr
+from typing import Union
 from fastapi import UploadFile
 
 class Category(BaseModel):
@@ -18,10 +19,13 @@ class ProductBase(BaseModel):
     quantity: int
     description: str
     price: float
-    image_url: UploadFile
+    image_url: Union[str,None]=None
 
     class Config:
         from_attributes = True
+
+class Product_Image(BaseModel):
+    image_url: Union[str,None]=None
 
 class Product(ProductBase):
     category_id: int

@@ -56,3 +56,32 @@ async def get_category_by_id(category_id, database):
     if not category_id:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data Not Found !")
     return category_info
+
+async def delete_category_by_id(category_id, database):
+    database.query(models.Categories).filter(models.Categories.id == category_id).delete()
+    database.commit()
+    return {"File Status" : f"category with category id :{category_id} has been deleted"}
+
+async def create_new_product(request_data, database) -> models.Product:
+    new_product = models.Product(name=request_data.get('name'), quantity=request_data.get("quantity"),
+                                 description=request_data.get("description"), price=request_data.get("price"),
+                                 image_url=request_data.get("image_url"),
+                                 category_id=request_data.get("category_id"))
+    database.add(new_product)
+    database.commit()
+    database.refresh(new_product)
+    return new_product
+
+async def get_all_products(database) -> List[models.Product]:
+    products = database.query(models.Product).all()
+    return products
+
+async def get_product_by_id(product_id, database):
+    product_info = database.query(models.Product).get(product_id)
+    if not product_id:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data Not Found !")
+    return product_info
+
+async def delete_product_by_id(product_id, database):
+    database.query(models.Product).filter(models.Product.id == product_id).delete()
+    database.commit()
