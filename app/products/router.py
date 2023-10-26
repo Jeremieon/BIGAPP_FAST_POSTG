@@ -26,3 +26,8 @@ async def create_category(text_data: str = Form(...), database: Session = Depend
 @router.get('/category', response_model=List[schema.ListCategory])
 async def get_all_categories(database: Session = Depends(db.get_db)):
     return await services.get_all_categories(database)
+
+
+@router.get('/category/{category_id}',response_model=schema.ListCategory)
+async def get_category_by_id(category_id : int,database: Session = Depends(db.get_db)):
+    return await services.get_category_by_id(category_id,database)

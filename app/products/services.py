@@ -50,3 +50,9 @@ async def create_new_category(category_data,database) -> models.Categories:
 async def get_all_categories(database) -> List[models.Categories]:
     categories = database.query(models.Categories).all()
     return categories
+
+async def get_category_by_id(category_id, database):
+    category_info = database.query(models.Categories).get(category_id)
+    if not category_id:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data Not Found !")
+    return category_info
