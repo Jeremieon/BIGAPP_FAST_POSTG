@@ -14,6 +14,9 @@ class User(Base):
     name = Column(String(50))
     email = Column(String(255), unique=True)
     password = Column(String(255))
+    cart = relationship("Cart", back_populates="user_cart")
+    order = relationship("Order", back_populates="user_info")
+    tasks = relationship("TaskDB", back_populates="owner")
 
     #initialize user table
     def __init__(self,name,email,password,*args,**kwargs):

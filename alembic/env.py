@@ -19,7 +19,9 @@ from app import config as config_env
 from app.db import Base
 from app.user.models import User
 from app.products.models import Categories,Product
-
+from app.orders.models import Order,OrderDetails
+from app.cart.models import Cart,CartItems
+from app.tasks.models import TaskDB
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
