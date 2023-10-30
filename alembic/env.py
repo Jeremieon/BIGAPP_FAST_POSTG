@@ -22,6 +22,7 @@ from app.products.models import Categories,Product
 from app.orders.models import Order,OrderDetails
 from app.cart.models import Cart,CartItems
 from app.tasks.models import TaskDB
+from app.note.models import Note
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata

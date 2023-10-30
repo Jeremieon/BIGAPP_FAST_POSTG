@@ -17,6 +17,7 @@ class User(Base):
     cart = relationship("Cart", back_populates="user_cart")
     order = relationship("Order", back_populates="user_info")
     tasks = relationship("TaskDB", back_populates="owner")
+    notes = relationship("Note", back_populates="owner")
 
     #initialize user table
     def __init__(self,name,email,password,*args,**kwargs):
