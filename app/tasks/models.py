@@ -14,5 +14,5 @@ class TaskDB(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_completed = Column(Boolean, default=False)
-    owner_id = Column(Integer, ForeignKey("users.id"))
+    owner_id = Column(Integer, ForeignKey("users.id",ondelete="CASCADE"))
     owner = relationship("User", back_populates="tasks")
