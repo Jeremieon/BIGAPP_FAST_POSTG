@@ -7,11 +7,12 @@ from app import db
 from app.user import hashing
 from app.user.models import User
 from .jwt import create_access_token
+from .schema import Login
 router = APIRouter(tags=["authentication"])
 
-
+#OAuth2PasswordRequestForm = Depends()
 @router.post('/login')
-def login(request: OAuth2PasswordRequestForm = Depends(), database: Session = Depends(db.get_db)):
+def login(request:Login, database: Session = Depends(db.get_db)):
     user = database.query(User).filter(User.email == request.username).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Invalid Credentials")
