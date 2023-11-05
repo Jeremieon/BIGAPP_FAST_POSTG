@@ -16,6 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="BIGAPP_API",description="Jeremiah BigAPP",version="0.1",redoc_url=None)
 
+#http://localhost:3000
 origins = ['*']
 app.add_middleware(
     CORSMiddleware,

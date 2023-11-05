@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException,status
 from app import db
 from . import services
-from . schemas import TaskCreate,Task,TaskSchema,TaskUpdate
+from . schemas import TaskCreate,Task,TaskSchema,TaskUpdate,TaskBase
 from app.auth.jwt import get_current_user
 from app.user.schema import User
 
@@ -11,18 +11,19 @@ router = APIRouter(
     tags=['Tasks'],
     prefix='/api'
 )
+
 @router.post("/tasks/", response_model=Task)
-async def create_task_api(task: TaskCreate,database: Session = Depends(db.get_db)):
-    create_task = await services.create_task(task,database)
+async def create_task_api(task: TaskBase,current_user: User = Depends(get_current_user),database: Session = Depends(db.get_db)):
+    create_task = await services.create_task(task,database,current_user.id)
     return create_task
 
 @router.get('/tasks/',response_model=List[Task])
-async def get_tasks(database: Session = Depends(db.get_db)):
-   return await services.fetch_tasks_lists(database)
+async def get_tasks(current_user: User = Depends(get_current_user),database: Session = Depends(db.get_db)):
+   return await services.fetch_tasks_lists(current_user.id,database)
 
 @router.get('/tasks/{task_id}',response_model=Task)
-async def get_task_by_id(task_id: int,database: Session = Depends(db.get_db)):
-    return await services.get_task(database,task_id)
+async def get_task_by_id(task_id: int,current_user: User = Depends(get_current_user),database: Session = Depends(db.get_db)):
+    return await services.get_task(task_id,current_user.id,database)
 # #creating Task
 # @app.post("/tasks/", response_model=Task,tags=["Tasks"])
 # def create_task_api(task: TaskCreate, current_user: User = Depends(get_current_user), db: SessionLocal = Depends(get_db)):
