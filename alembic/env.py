@@ -2,20 +2,10 @@ from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
+#from dotenv import load_dotenv
 from alembic import context
 
-# this is the Alembic Config object, which provides
-# access to the values within the .ini file in use.
-config = context.config
-
-# Interpret the config file for Python logging.
-# This line sets up loggers basically.
-if config.config_file_name is not None:
-    fileConfig(config.config_file_name)
-
-# add your model's MetaData object here
-from app import config as config_env
+import os
 from app.db import Base
 from app.user.models import User
 from app.products.models import Categories,Product
@@ -23,6 +13,16 @@ from app.orders.models import Order,OrderDetails
 from app.cart.models import Cart,CartItems
 from app.tasks.models import TaskDB
 from app.note.models import Note
+# this is the Alembic Config object, which provides
+# access to the values within the .ini file in use.
+config = context.config
+#load_dotenv()
+# Interpret the config file for Python logging.
+# This line sets up loggers basically.
+if config.config_file_name is not None:
+    fileConfig(config.config_file_name)
+
+# add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
@@ -33,12 +33,14 @@ target_metadata = Base.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+
 def get_url():
-    db_user = config_env.DATABASE_USERNAME
-    db_password = config_env.DATABASE_PASSWORD
-    db_host = config_env.DATABASE_HOST
-    db_name = config_env.DATABASE_NAME
-    return f"postgresql://{db_user}:{db_password}@{db_host}/{db_name}"
+    # db_user = config_env.DATABASE_USERNAME
+    # db_password = config_env.DATABASE_PASSWORD
+    # db_host = config_env.DATABASE_HOST
+    # db_name = config_env.DATABASE_NAME
+    database_url = os.environ.get("DATABASE_URL")
+    return database_url
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -96,6 +98,7 @@ if context.is_offline_mode():
 else:
     run_migrations_online()
 
-#to run after
+    #to run after
 # alembic revision --autogenerate
 #alembic upgrade head
+#docker exec container nbjhvgv kjhgvb
