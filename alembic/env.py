@@ -102,3 +102,4 @@ else:
 # alembic revision --autogenerate
 #alembic upgrade head
 #docker exec container nbjhvgv kjhgvb
+#docker-compose exec app alembic revision --autogenerate -m "Your revision message here"
