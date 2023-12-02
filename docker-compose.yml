@@ -10,7 +10,7 @@ services:
     environment:
       DATABASE_URL: postgresql://user:password@db:5432/app_db
       SECRET_KEY: supersecrffydurhgsjdet
-    #command: bash -c "alembic revision --autogenerate && alembic upgrade head"
+    command: bash -c "alembic revision --autogenerate && alembic upgrade head"
     
 
   db:
